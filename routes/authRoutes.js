@@ -132,8 +132,14 @@ router.post("/profile/refresh", async (req, res) => {
     const { access_token, refresh_token, user } = data.session;
 
     // Set new cookies
-    res.cookie('sb_access_token', access_token, { httpOnly: true, sameSite: 'lax', path: '/', secure: process.env.NODE_ENV === 'production' });
-    res.cookie('sb_refresh_token', refresh_token, { httpOnly: true, sameSite: 'lax', path: '/', secure: process.env.NODE_ENV === 'production', maxAge: 60*60*24*15 });
+    // res.cookie('sb_access_token', access_token, { httpOnly: true, sameSite: 'lax', path: '/', secure: process.env.NODE_ENV === 'production' });
+    // res.cookie('sb_refresh_token', refresh_token, { httpOnly: true, sameSite: 'lax', path: '/', secure: process.env.NODE_ENV === 'production', maxAge: 60*60*24*15 });
+    res.cookie('sb_access_token', access_token, { ...cookieOption });
+res.cookie('sb_refresh_token', refresh_token, {
+  ...cookieOption,
+  maxAge: 60 * 60 * 24 * 15 * 1000
+});
+
 
     res.json({ user: { id: user.id, email: user.email, name: user.user_metadata?.name } });
   } catch (err) {
