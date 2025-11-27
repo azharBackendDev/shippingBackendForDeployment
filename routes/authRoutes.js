@@ -6,7 +6,7 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = true;
 
 const cookieOption = {
   httpOnly: true,
